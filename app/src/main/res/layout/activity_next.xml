@@ -2,11 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:padding="16dp">
 
+    <!-- Text field to display the instructions passed from MainActivity -->
     <TextView
+        android:id="@+id/tv_instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Instructions will appear here"
+        android:background="@android:color/darker_gray"
+        android:textSize="16sp" />
+
+    <!-- Register Button -->
+    <Button
+        android:id="@+id/btn_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to the Next Activity!"
-        android:textSize="18sp" />
+        android:text="Register"
+        android:layout_below="@id/tv_instructions"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="32dp" />
+
+    <!-- Cancel Button -->
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_below="@id/tv_instructions"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="32dp" />
 </RelativeLayout>

@@ -31,9 +31,20 @@ class Colocviul1_1MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_west).setOnClickListener { onCardinalPointSelected("West") }
         findViewById<Button>(R.id.btn_center).setOnClickListener { addText("Center") }
 
-        // Set up the button to open the next activity
+        // Inside MainActivity.kt
         findViewById<Button>(R.id.btn_next_activity).setOnClickListener {
-            startActivity(Intent(this, NextActivity::class.java))
+            // Reset the display and count (optional, if you still want this behavior)
+            //resetFields()
+
+            // Create an Intent to launch NextActivity
+            val intent = Intent(this, NextActivity::class.java)
+
+            // Pass the current instructions to NextActivity
+            val instructions = buttonPressSequence.joinToString(" -> ")
+            intent.putExtra("INSTRUCTIONS", instructions)
+
+            // Start NextActivity
+            startActivity(intent)
         }
     }
 
@@ -46,12 +57,22 @@ class Colocviul1_1MainActivity : AppCompatActivity() {
     private fun addText(buttonText: String) {
         // Add the pressed button's text to the sequence
         buttonPressSequence.add(buttonText)
-        // Update the TextView with the current sequence
+        // Update the TextView with the current sequence and click count
         updateDisplayTextView()
     }
 
     private fun updateDisplayTextView() {
-        displayTextView.text = buttonPressSequence.joinToString(" -> ")
+        // Display the button press sequence and the current count of cardinal points
+        displayTextView.text = "No. of Card. Pts: $cardinalPointCount -> ${buttonPressSequence.joinToString(" -> ")}"
+    }
+
+    private fun resetFields() {
+        // Clear the button press sequence
+        buttonPressSequence.clear()
+
+        // Reset the TextView display to show 0 clicks and an empty sequence
+        cardinalPointCount = 0
+        displayTextView.text = "Clicks: 0 -> "
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -68,12 +89,5 @@ class Colocviul1_1MainActivity : AppCompatActivity() {
         buttonPressSequence.clear()
         buttonPressSequence.addAll(savedInstanceState.getStringArrayList("buttonPressSequence") ?: listOf())
         updateDisplayTextView()
-    }
-}
-
-class NextActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_next)
     }
 }
