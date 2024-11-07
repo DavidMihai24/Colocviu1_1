@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- North Button -->
+    <Button
+        android:id="@+id/btn_north"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="North"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true" />
+
+    <!-- South Button -->
+    <Button
+        android:id="@+id/btn_south"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="South"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
+
+    <!-- East Button -->
+    <Button
+        android:id="@+id/btn_east"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="East"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true" />
+
+    <!-- West Button -->
+    <Button
+        android:id="@+id/btn_west"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="West"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
+
+    <!-- Center Button -->
+    <Button
+        android:id="@+id/btn_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Center"
+        android:layout_centerInParent="true" />
+
+    <!-- TextView for display -->
+    <TextView
+        android:id="@+id/tv_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_center"
+        android:layout_marginTop="32dp"
+        android:padding="16dp"
+        android:background="@android:color/darker_gray"
+        android:text="North, East, South, West"
+        android:textAlignment="center" />
+
+    <!-- Button to navigate to the next activity -->
+    <Button
+        android:id="@+id/btn_next_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Next Activity"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_display"
+        android:layout_marginTop="16dp"/>
+</RelativeLayout>
