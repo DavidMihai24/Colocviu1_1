@@ -9,6 +9,7 @@ class Colocviul1_1MainActivity : AppCompatActivity() {
 
     private lateinit var displayTextView: TextView
     private val buttonPressSequence = mutableListOf<String>()
+    private var cardinalPointCount = 0  // Integer member to track cardinal point selections
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,12 +17,19 @@ class Colocviul1_1MainActivity : AppCompatActivity() {
 
         displayTextView = findViewById(R.id.tv_display)
 
-        // Set up buttons and their click listeners
-        findViewById<Button>(R.id.btn_north).setOnClickListener { addButtonText("North") }
-        findViewById<Button>(R.id.btn_south).setOnClickListener { addButtonText("South") }
-        findViewById<Button>(R.id.btn_east).setOnClickListener { addButtonText("East") }
-        findViewById<Button>(R.id.btn_west).setOnClickListener { addButtonText("West") }
-        //findViewById<Button>(R.id.btn_center).setOnClickListener { addButtonText("Center") }
+        // Restore saved instance state if available
+        if (savedInstanceState != null) {
+            cardinalPointCount = savedInstanceState.getInt("cardinalPointCount", 0)
+            buttonPressSequence.addAll(savedInstanceState.getStringArrayList("buttonPressSequence") ?: listOf())
+            updateDisplayTextView()
+        }
+
+        // Set up listeners for each button to add text to the sequence
+        findViewById<Button>(R.id.btn_north).setOnClickListener { onCardinalPointSelected("North") }
+        findViewById<Button>(R.id.btn_south).setOnClickListener { onCardinalPointSelected("South") }
+        findViewById<Button>(R.id.btn_east).setOnClickListener { onCardinalPointSelected("East") }
+        findViewById<Button>(R.id.btn_west).setOnClickListener { onCardinalPointSelected("West") }
+        findViewById<Button>(R.id.btn_center).setOnClickListener { addText("Center") }
 
         // Set up the button to open the next activity
         findViewById<Button>(R.id.btn_next_activity).setOnClickListener {
@@ -29,15 +37,43 @@ class Colocviul1_1MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addButtonText(buttonText: String) {
+    private fun onCardinalPointSelected(buttonText: String) {
+        // Increment the count for cardinal points and add text
+        cardinalPointCount++
+        addText(buttonText)
+    }
+
+    private fun addText(buttonText: String) {
+        // Add the pressed button's text to the sequence
         buttonPressSequence.add(buttonText)
+        // Update the TextView with the current sequence
+        updateDisplayTextView()
+    }
+
+    private fun updateDisplayTextView() {
         displayTextView.text = buttonPressSequence.joinToString(" -> ")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Save the number of cardinal points selected and the sequence of button presses
+        outState.putInt("cardinalPointCount", cardinalPointCount)
+        outState.putStringArrayList("buttonPressSequence", ArrayList(buttonPressSequence))
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        // Restore the count and sequence
+        cardinalPointCount = savedInstanceState.getInt("cardinalPointCount", 0)
+        buttonPressSequence.clear()
+        buttonPressSequence.addAll(savedInstanceState.getStringArrayList("buttonPressSequence") ?: listOf())
+        updateDisplayTextView()
     }
 }
 
 class NextActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_next)
+        setContentView(R.layout.activity_next)
     }
 }
